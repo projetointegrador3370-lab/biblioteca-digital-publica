@@ -1,18 +1,10 @@
 import { google } from 'googleapis';
 import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-const CREDENTIALS_PATH = path.join(__dirname, '../../config/credentials.json');
-const TOKEN_PATH = path.join(__dirname, '../../config/token.json');
 
 const FOLDER_ID = '1S2-fMxzHR6erTpY0t-i3YYuRLDcen1Jb';
 
-const credentials = JSON.parse(fs.readFileSync(CREDENTIALS_PATH));
-const token = JSON.parse(fs.readFileSync(TOKEN_PATH));
+const credentials = JSON.parse(process.env.GOOGLE_CREDENTIALS_JSON);
+const token = JSON.parse(process.env.GOOGLE_TOKEN_JSON);
 
 const { client_id, client_secret, redirect_uris } = credentials.installed;
 
@@ -28,6 +20,10 @@ const drive = google.drive({
   version: 'v3',
   auth,
 });
+
+function getApiBaseUrl() {
+  return process.env.API_BASE_URL || 'http://localhost:3001';
+}
 
 export async function uploadFile(file) {
   try {
@@ -66,7 +62,7 @@ export async function uploadFile(file) {
       viewUrl: `https://drive.google.com/file/d/${fileId}/view`,
       downloadUrl: `https://drive.google.com/uc?export=download&id=${fileId}`,
       directUrl: `https://drive.google.com/uc?export=view&id=${fileId}`,
-      apiUrl: `http://localhost:3001/api/files/${fileId}`,
+      apiUrl: `${getApiBaseUrl()}/api/files/${fileId}`,
     };
   } catch (error) {
     if (file?.path && fs.existsSync(file.path)) {
