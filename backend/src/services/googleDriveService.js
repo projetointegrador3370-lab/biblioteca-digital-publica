@@ -3,18 +3,26 @@ import fs from 'fs';
 
 const FOLDER_ID = '1S2-fMxzHR6erTpY0t-i3YYuRLDcen1Jb';
 
-const credentials = JSON.parse(process.env.GOOGLE_CREDENTIALS_JSON);
-const token = JSON.parse(process.env.GOOGLE_TOKEN_JSON);
+function loadGoogleCredentials() {
+  if (process.env.GOOGLE_CREDENTIALS_JSON) {
+    return JSON.parse(process.env.GOOGLE_CREDENTIALS_JSON);
+  }
 
-const { client_id, client_secret, redirect_uris } = credentials.installed;
+  if (fs.existsSync('./config/credentials.json')) {
+    return JSON.parse(fs.readFileSync('./config/credentials.json', 'utf8'));
+  }
 
-const auth = new google.auth.OAuth2(
-  client_id,
-  client_secret,
-  redirect_uris[0]
-);
+  throw new Error(
+    'Credenciais do Google Drive não encontradas. Configure GOOGLE_CREDENTIALS_JSON no Render ou backend/config/credentials.json localmente.'
+  );
+}
 
-auth.setCredentials(token);
+const credentials = loadGoogleCredentials();
+
+const auth = new google.auth.GoogleAuth({
+  credentials,
+  scopes: ['https://www.googleapis.com/auth/drive'],
+});
 
 const drive = google.drive({
   version: 'v3',
@@ -36,7 +44,7 @@ export async function uploadFile(file) {
         mimeType: file.mimetype,
         body: fs.createReadStream(file.path),
       },
-      fields: 'id, name, mimeType, webViewLink, webContentLink',
+      fields: 'id, name, mimeType',
       supportsAllDrives: true,
     });
 

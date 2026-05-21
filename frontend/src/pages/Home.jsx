@@ -22,7 +22,7 @@ function Home() {
 
   const fetchBooks = async (searchValue = '') => {
     try {
-      const response = await api.get('/books', {
+      const response = await api.get('/api/books', {
         params: searchValue ? { search: searchValue } : {},
       });
 
@@ -65,10 +65,12 @@ function Home() {
       <section className="hero-home">
         <div className="hero-text">
           <span className="hero-label">Biblioteca Digital</span>
+
           <h1>
             Descubra novos livros, leia online e aproveite recursos de
             acessibilidade
           </h1>
+
           <p>
             Encontre títulos por autor ou nome da obra, explore categorias e
             tenha acesso a uma experiência de leitura simples, prática e
@@ -79,6 +81,7 @@ function Home() {
             <a href="#catalogo" className="btn-primary">
               Explorar livros
             </a>
+
             <Link to="/categorias" className="btn-outline">
               Ver categorias
             </Link>
@@ -90,10 +93,12 @@ function Home() {
             <strong>Leitura online</strong>
             <span>Acesse livros digitais em um só lugar</span>
           </div>
+
           <div className="hero-panel-card">
             <strong>Audiobooks</strong>
             <span>Ouça conteúdos com mais praticidade</span>
           </div>
+
           <div className="hero-panel-card">
             <strong>Busca rápida</strong>
             <span>Pesquise por título ou autor</span>
@@ -104,6 +109,7 @@ function Home() {
       <section className="highlights">
         <article className="highlight-card">
           <h3>Leitura fácil</h3>
+
           <p>
             Navegue pelo acervo e encontre livros de forma rápida e organizada.
           </p>
@@ -111,6 +117,7 @@ function Home() {
 
         <article className="highlight-card">
           <h3>Acesso em qualquer momento</h3>
+
           <p>
             Consulte o catálogo digital sempre que quiser, com praticidade.
           </p>
@@ -118,6 +125,7 @@ function Home() {
 
         <article className="highlight-card">
           <h3>Mais acessibilidade</h3>
+
           <p>
             Utilize recursos como audiobooks para tornar a experiência mais
             inclusiva.
@@ -129,6 +137,7 @@ function Home() {
         <div className="section-top">
           <div>
             <span className="section-label">Acervo digital</span>
+
             <h2>Catálogo da Biblioteca</h2>
 
             {categoriaFiltro && (
@@ -164,6 +173,7 @@ function Home() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
+
           <button type="submit">Buscar</button>
         </form>
 
@@ -177,6 +187,7 @@ function Home() {
           {filteredBooks.length === 0 ? (
             <div className="empty-state">
               <h3>Nenhum livro encontrado</h3>
+
               <p>
                 Tente realizar uma nova busca ou escolha outra categoria/faixa
                 etária.

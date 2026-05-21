@@ -14,7 +14,7 @@ function BookDetails() {
   useEffect(() => {
     const fetchBook = async () => {
       try {
-        const response = await api.get(`/books/${id}`);
+        const response = await api.get(`/api/books/${id}`);
         setBook(response.data);
       } catch (error) {
         console.error('Erro ao buscar livro:', error);
@@ -39,6 +39,7 @@ function BookDetails() {
       <main className="container">
         <section className="book-details-page">
           <h2>Livro não encontrado</h2>
+
           <Link to="/" className="details-back-link">
             Voltar para o catálogo
           </Link>
