@@ -20,9 +20,9 @@ function AdminBooks() {
 
       const [booksResponse, categoriesResponse, ageGroupsResponse] =
         await Promise.all([
-          api.get('/books'),
-          api.get('/categories'),
-          api.get('/age-groups'),
+          api.get('/api/books'),
+          api.get('/api/categories'),
+          api.get('/api/age-groups'),
         ]);
 
       setBooks(booksResponse.data);
@@ -53,7 +53,7 @@ function AdminBooks() {
       setErrorMessage('');
       setSuccessMessage('');
 
-      await api.post('/admin/books', payload);
+      await api.post('/api/admin/books', payload);
 
       setSuccessMessage('Livro cadastrado com sucesso.');
       resetFormState();
@@ -72,7 +72,7 @@ function AdminBooks() {
       setErrorMessage('');
       setSuccessMessage('');
 
-      await api.put(`/admin/books/${editingBook.id}`, payload);
+      await api.put(`/api/admin/books/${editingBook.id}`, payload);
 
       setSuccessMessage('Livro atualizado com sucesso.');
       resetFormState();
@@ -98,7 +98,7 @@ function AdminBooks() {
       setErrorMessage('');
       setSuccessMessage('');
 
-      await api.delete(`/admin/books/${bookId}`);
+      await api.delete(`/api/admin/books/${bookId}`);
       setSuccessMessage('Livro removido com sucesso.');
       await loadPageData();
     } catch (error) {
