@@ -15,7 +15,10 @@ export const removeToken = () => {
 };
 
 export const loginRequest = async (email, password) => {
-  const response = await api.post('/auth/login', { email, password });
+  const response = await api.post('/api/auth/login', {
+    email,
+    password,
+  });
 
   if (response.data?.token) {
     saveToken(response.data.token);
@@ -25,7 +28,7 @@ export const loginRequest = async (email, password) => {
 };
 
 export const getCurrentUser = async () => {
-  const response = await api.get('/auth/me');
+  const response = await api.get('/api/auth/me');
   return response.data;
 };
 
