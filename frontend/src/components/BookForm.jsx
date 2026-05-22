@@ -69,7 +69,7 @@ function BookForm({
       const formDataUpload = new FormData();
       formDataUpload.append('file', file);
 
-      const response = await api.post('/upload', formDataUpload, {
+      const response = await api.post('/api/upload', formDataUpload, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
